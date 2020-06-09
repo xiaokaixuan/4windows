@@ -1,0 +1,32 @@
+// ContextBG.idl : ContextBG 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(ContextBG.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(0F43CB3F-0305-4A89-9FEC-06AA191B6011),
+	pointer_default(unique)
+]
+interface IContextBGExt : IUnknown{
+};
+[
+	uuid(B1458FBA-3ABF-4A46-A581-B2E226D2BF44),
+	version(1.0),
+]
+library ContextBGLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(8C3637E2-5DE0-4F02-A3FE-F216BC63D711)		
+	]
+	coclass ContextBGExt
+	{
+		[default] interface IContextBGExt;
+	};
+};
+

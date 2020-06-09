@@ -1,0 +1,15 @@
+**/*.ilk
+
+*/Debug
+*/Release
+
+*/*.ncb
+*/*.opt
+*/*.plg
+
+**/Debug
+**/Release
+
+*/*.sdf
+**/*.exp
+**/*.pdb

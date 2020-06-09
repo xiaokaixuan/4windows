@@ -1,0 +1,45 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {8C3637E2-5DE0-4F02-A3FE-F216BC63D711} = s 'ContextBGExt Class'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{B1458FBA-3ABF-4A46-A581-B2E226D2BF44}'
+			Version = s '1.0'
+		}
+	}
+	NoRemove Directory
+	{
+		NoRemove Background
+		{
+			NoRemove ShellEx
+			{
+				NoRemove ContextMenuHandlers
+				{
+					ForceRemove ShellExternFolderBackGround = s '{8C3637E2-5DE0-4F02-A3FE-F216BC63D711}'
+				}
+			}
+		}
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove ShellExternFolderBackGround = s '{8C3637E2-5DE0-4F02-A3FE-F216BC63D711}'
+			}
+		}
+    }
+	NoRemove *
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove ShellExternFolderBackGround = s '{8C3637E2-5DE0-4F02-A3FE-F216BC63D711}'
+			}
+		}
+	}
+}
