@@ -12,3 +12,6 @@
 ### ContextBG.dll
 > Windows右键菜单背景插件，通过ResourceHacker更换图片。
 
+### MultiWechat.exe
+> 微信(PC版)多开器，点击启动即可开启一个微信进程。
+
