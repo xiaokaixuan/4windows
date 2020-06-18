@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Jun 09 16:56:54 2020
+/* at Thu Jun 18 10:46:02 2020
  */
 /* Compiler settings for ContextBG.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 

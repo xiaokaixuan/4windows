@@ -6,16 +6,18 @@
 
 // CContextBGExt
 
+HBRUSH CContextBGExt::sm_hbgBrush = NULL;
+
 STDMETHODIMP CContextBGExt::Initialize(LPCITEMIDLIST, LPDATAOBJECT, HKEY)
 {
 	do
 	{
-		if (m_hbgBrush) break;
+		if (sm_hbgBrush) break;
 		HBITMAP hBitmap = LoadBitmap(_AtlBaseModule.GetModuleInstance(), MAKEINTRESOURCE(IDB_BG));
 		if (!hBitmap) break;
-		m_hbgBrush = CreatePatternBrush(hBitmap);
+		sm_hbgBrush = CreatePatternBrush(hBitmap);
 		DeleteObject(hBitmap);
-		if (!m_hbgBrush) break;
+		if (!sm_hbgBrush) break;
 	} while (0);
 	return S_OK;
 }
@@ -28,10 +30,10 @@ STDMETHODIMP CContextBGExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT i
 	}
 	do
 	{
-		if (!m_hbgBrush) break;
+		if (!sm_hbgBrush) break;
 		MENUINFO mi = { 0 };
 		mi.cbSize = sizeof(mi);
-		mi.hbrBack = m_hbgBrush;
+		mi.hbrBack = sm_hbgBrush;
 		mi.fMask = MIM_APPLYTOSUBMENUS | MIM_BACKGROUND;
 		SetMenuInfo(hMenu, &mi);
 	} while (0);

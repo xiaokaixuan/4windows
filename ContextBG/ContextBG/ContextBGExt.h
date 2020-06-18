@@ -26,12 +26,8 @@ class ATL_NO_VTABLE CContextBGExt :
 	public IContextMenu
 {
 public:
-	CContextBGExt() : m_hbgBrush(NULL)
+	CContextBGExt()
 	{
-	}
-	virtual ~CContextBGExt()
-	{
-		if (m_hbgBrush) DeleteObject(m_hbgBrush);
 	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_CONTEXTBGEXT)
@@ -56,7 +52,7 @@ END_COM_MAP()
 	}
 
 private: 
-	HBRUSH m_hbgBrush;
+	static HBRUSH sm_hbgBrush;
 public:
 	// IShellExtInit
 	STDMETHODIMP Initialize(LPCITEMIDLIST, LPDATAOBJECT, HKEY);
