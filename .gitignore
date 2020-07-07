@@ -6,6 +6,7 @@
 */*.ncb
 */*.opt
 */*.plg
+*/*.obj
 
 **/Debug
 **/Release
