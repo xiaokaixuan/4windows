@@ -1,6 +1,6 @@
 
 CC=cl /nologo
-CFLAGS=-c -W3 -Ox /MT
+CFLAGS=-c -W3 -Ox /MT /wd "4996"
 LINKER=link
 LINKCON = /nologo /NODEFAULTLIB:libc
 
@@ -13,4 +13,4 @@ $(OBJS): $(@B).c paths.h
     $(CC) $(CFLAGS) $(@B).c
 
 ftpdmin.exe: $(OBJS)
-    $(LINKER) $(LINKCON) -OUT:ftpdmin.exe $(OBJS) ws2_32.lib 
+    $(LINKER) $(LINKCON) -OUT:Bin/ftpdmin.exe $(OBJS) ws2_32.lib 

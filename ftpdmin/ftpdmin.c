@@ -166,7 +166,7 @@ static CmdTypes GetCommand(Inst_t * Conn, char *CmdArg)
     b = 0;
     if (InputString[a++] == ' '){
         for (b=0;b<500-1;b++){
-            if (InputString[a+b] < 32) break;
+            if (InputString[a+b] >= 0 && InputString[a+b] < 32) break;
             CmdArg[b] = InputString[a+b];
         }
     }
@@ -234,7 +234,7 @@ static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
 
 
     {
-        struct _finddata_t finddata;
+        struct __finddata64_t finddata;
         long find_handle;
 
         if (*filename == 0) filename = "*";
@@ -246,7 +246,7 @@ static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
             filename = "*";
         }
 
-        find_handle = _findfirst(filename, &finddata);
+        find_handle = _findfirst64(filename, &finddata);
 
         for (;;){
             char timestr[20];
@@ -271,9 +271,9 @@ static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
                 DirAttr = finddata.attrib & _A_SUBDIR ? 'd' : '-';
                 WriteAttr = finddata.attrib & _A_RDONLY ? '-' : 'w';
 
-                sprintf(repbuf,"%cr%c-r%c-r%c-   1 root  root    %7u %s %s\r\n", 
+                sprintf(repbuf,"%cr%c-r%c-r%c-   1 root  root    %I64d %s %s\r\n", 
                         DirAttr, WriteAttr, WriteAttr, WriteAttr,
-                        (unsigned)finddata.size,
+                        finddata.size,
                         timestr,
                         finddata.name);
             }else{
@@ -282,7 +282,7 @@ static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
             send(xfer_sock, repbuf, strlen(repbuf),0);
 
             next_file:
-            if (_findnext(find_handle, &finddata) != 0) break;
+            if (_findnext64(find_handle, &finddata) != 0) break;
         }
         _findclose(find_handle);
     }
@@ -414,11 +414,11 @@ static void Cmd_STOR(Inst_t * Conn, char *filename)
 //------------------------------------------------------------------------------------
 static void StatCmds(Inst_t * Conn, char *filename, enum CmdtTypes Cmd)
 {
-    struct stat FileStat;
+    struct _stat64 FileStat;
     struct tm tm;
     char RepBuf[50];
 
-    if (stat(filename, &FileStat)){
+    if (_stat64(filename, &FileStat)){
         Send550Error(Conn);
         return;
     }
@@ -440,7 +440,7 @@ static void StatCmds(Inst_t * Conn, char *filename, enum CmdtTypes Cmd)
             break;
 
         case xSIZE:
-            sprintf(RepBuf, "213 %u",FileStat.st_size);
+            sprintf(RepBuf, "213 %I64d",FileStat.st_size);
             break;
 
         default:
