@@ -18,3 +18,5 @@
 ### ftpdmin.exe
 > 一个简易的FTP服务器，无需登陆即可上传下载。
 
+### qmail_upload.exe
+> 通过文件大小和SHA1将文件秒传至QQ中转站，加速下载。
