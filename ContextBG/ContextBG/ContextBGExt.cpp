@@ -30,7 +30,7 @@ STDMETHODIMP CContextBGExt::QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT i
 	}
 	do
 	{
-		if (!sm_hbgBrush) break;
+		if (!hMenu || !sm_hbgBrush) break;
 		MENUINFO mi = { 0 };
 		mi.cbSize = sizeof(mi);
 		mi.hbrBack = sm_hbgBrush;
