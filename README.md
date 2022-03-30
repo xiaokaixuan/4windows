@@ -20,3 +20,7 @@
 
 ### qmail_upload.exe
 > 通过文件大小和SHA1将文件秒传至QQ中转站，加速下载。
+
+### RemovePeSign.exe
+> 去除EXE或DLL文件中的数字签名，如`RemovePeSign.exe sample.exe`。
+
