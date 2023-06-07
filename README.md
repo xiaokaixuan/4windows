@@ -24,3 +24,5 @@
 ### RemovePeSign.exe
 > 去除EXE或DLL文件中的数字签名，如`RemovePeSign.exe sample.exe`。
 
+### ToHardlink.exe
+> 将当前文件夹下(包含子文件夹)的相同文件转换为硬连接存储，仅支持NTFS文件系统。
