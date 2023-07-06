@@ -4,6 +4,7 @@
 
 void WINAPI parseGammaRGB(int *gammaRGB, int argc, char* argv[]);
 typedef BOOL (WINAPI *Type_SetDeviceGammaRamp)(HDC hDC, LPVOID lpRamp);
+typedef BOOL (WINAPI *Type_EnumDisplayDevicesA)(PVOID Unused, DWORD iDevNum, PDISPLAY_DEVICEA lpDisplayDevice, DWORD dwFlags);
 
 int main(int argc, char* argv[])
 {
@@ -11,9 +12,10 @@ int main(int argc, char* argv[])
 	parseGammaRGB(gammaRGB, argc, argv);
 	
 	HMODULE hGDI32 = LoadLibrary("gdi32.dll");
+	HMODULE hUser32 = LoadLibrary("user32.dll");
 	Type_SetDeviceGammaRamp pGetDeviceGammaRamp = (Type_SetDeviceGammaRamp)GetProcAddress(hGDI32, "GetDeviceGammaRamp");
 	Type_SetDeviceGammaRamp pSetDeviceGammaRamp = (Type_SetDeviceGammaRamp)GetProcAddress(hGDI32, "SetDeviceGammaRamp");
-	HDC hGammaDC = GetDC(NULL);
+	Type_EnumDisplayDevicesA pEnumDisplayDevicesA = (Type_EnumDisplayDevicesA)GetProcAddress(hUser32, "EnumDisplayDevicesA");
 	WORD GammaArray[3][256] = { 0 };
 	for (int iIndex = 0; iIndex < 256; ++iIndex)
 	{
@@ -27,7 +29,16 @@ int main(int argc, char* argv[])
 		GammaArray[1][iIndex] = (WORD)iArrayG;
 		GammaArray[2][iIndex] = (WORD)iArrayB;
 	}
-	pSetDeviceGammaRamp(hGammaDC, GammaArray);
+	DISPLAY_DEVICE dd = { 0 };
+	dd.cb = sizeof(dd);
+	HDC hGammaDC = NULL;
+	for (DWORD dwDevNum = 0; pEnumDisplayDevicesA(NULL, dwDevNum, &dd, 0); ++dwDevNum)
+	{
+		if (!(dd.StateFlags & DISPLAY_DEVICE_ATTACHED_TO_DESKTOP)) continue;
+		hGammaDC = CreateDCA((LPCSTR)dd.DeviceName, NULL, NULL, NULL);
+		pSetDeviceGammaRamp(hGammaDC, GammaArray);
+		DeleteDC(hGammaDC);
+	}
 	return 0;
 }
 
