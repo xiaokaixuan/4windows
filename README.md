@@ -41,3 +41,7 @@
 
 ### globalproxy.exe
 > Windows上命令行一键设置全局代理和取消代理的小工具。
+
+### Wifi_Share.exe
+> Wifi热点强制开启工具，无需先连接互联网。
+
