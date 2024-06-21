@@ -148,6 +148,11 @@ namespace Wifi_Share
             }
             WriteWifiNames();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("ncpa.cpl");
+        }
     }
 }
 
