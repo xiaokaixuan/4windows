@@ -7,18 +7,20 @@ using System.Windows.Forms;
 
 namespace Wifi_Share
 {
-    public class MouseCursor
+    public static class MouseCursor
     {
+        private static Cursor cursor = Cursors.Default;
         public static void Wait()
         {
+            cursor = Cursor.Current;
             Application.UseWaitCursor = true;
             Cursor.Current = Cursors.WaitCursor;
         }
 
-        public static void Default()
+        public static void Restore()
         {
             Application.UseWaitCursor = false;
-            Cursor.Current = Cursors.Default;
+            Cursor.Current = cursor;
         }
     }
 }

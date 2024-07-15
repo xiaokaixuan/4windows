@@ -10,15 +10,19 @@ namespace Wifi_Share
 {
     public class SingleProcess
     {
-        private static readonly string _uniqueName = "__Mutex_Wifi_Share__";
+        private static readonly string _uniqueName = $"__Mutex_{nameof(Wifi_Share)}__";
         private readonly bool _createNew = false;
         private readonly bool _isAdmin = false;
         private readonly MemoryMappedFile _mapFile;
 
-        public bool IsNew { get => _createNew; }
-        public bool IsAdmin { get => _isAdmin; }
+        public bool IsNew => _createNew;
+        public bool IsAdmin => _isAdmin;
+        /// <summary>
+        /// Lazy Singleton
+        /// </summary>
         private static class Nested
         {
+            static Nested() { } // Cancel BeforeFieldInit
             public static readonly SingleProcess instance = new SingleProcess();
             [DllImport("User32", CharSet = CharSet.Unicode, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -32,7 +36,7 @@ namespace Wifi_Share
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetForegroundWindow(IntPtr hWnd);
         }
-        public static SingleProcess Instance { get => Nested.instance; }
+        public static SingleProcess Instance => Nested.instance;
         private SingleProcess()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();

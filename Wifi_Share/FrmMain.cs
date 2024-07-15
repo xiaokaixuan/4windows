@@ -59,16 +59,23 @@ namespace Wifi_Share
             }
             SaveWifiName(SSID, password);
             MouseCursor.Wait();
-            var tetheringManager = NetworkOperatorTetheringManager.CreateFromConnectionProfile(shareProfile);
-            var tetherConfig = tetheringManager.GetCurrentAccessPointConfiguration();
-            tetherConfig.Band = comboBox2.SelectedIndex == 0 ? TetheringWiFiBand.TwoPointFourGigahertz : TetheringWiFiBand.FiveGigahertz;
-            tetherConfig.Ssid = SSID;
-            tetherConfig.Passphrase = password;
-            await tetheringManager.ConfigureAccessPointAsync(tetherConfig);
-            await tetheringManager.StartTetheringAsync();
-            _tetheringManager = tetheringManager;
-            button1.Text = "关闭热点(&P)";
-            MouseCursor.Default();
+            try
+            {
+                var tetheringManager = NetworkOperatorTetheringManager.CreateFromConnectionProfile(shareProfile);
+                var tetherConfig = tetheringManager.GetCurrentAccessPointConfiguration();
+                tetherConfig.Band = comboBox2.SelectedIndex == 0 ? TetheringWiFiBand.TwoPointFourGigahertz : TetheringWiFiBand.FiveGigahertz;
+                tetherConfig.Ssid = SSID;
+                tetherConfig.Passphrase = password;
+                await tetheringManager.ConfigureAccessPointAsync(tetherConfig);
+                await tetheringManager.StartTetheringAsync();
+                _tetheringManager = tetheringManager;
+                button1.Text = "关闭热点(&P)";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"强制开启热点失败 ！\n{ex.ToString()}", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally { MouseCursor.Restore(); }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -100,10 +107,14 @@ namespace Wifi_Share
         {
             if (_tetheringManager == null) return;
             MouseCursor.Wait();
-            await _tetheringManager.StopTetheringAsync();
-            _tetheringManager = null;
-            button1.Text = "强制开启热点(&O)";
-            MouseCursor.Default();
+            try
+            {
+                await _tetheringManager.StopTetheringAsync();
+                _tetheringManager = null;
+                button1.Text = "强制开启热点(&O)";
+            }
+            catch (Exception) { }
+            finally { MouseCursor.Restore(); }
         }
 
         private void ReadWifiNames()
