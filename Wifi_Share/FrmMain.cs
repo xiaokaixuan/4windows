@@ -16,8 +16,8 @@ namespace Wifi_Share
 {
     public partial class FrmMain : Form
     {
-        private List<string> _netGuids = new List<string>();
-        private List<(string, string)> _wifiNames = new List<(string, string)>();
+        private readonly List<string> _netGuids = new List<string>();
+        private readonly List<(string, string)> _wifiNames = new List<(string, string)>();
         private NetworkOperatorTetheringManager _tetheringManager;
 
         public FrmMain()
@@ -73,7 +73,7 @@ namespace Wifi_Share
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"强制开启热点失败 ！\n{ex.ToString()}", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"强制开启热点失败 ！\n{ex}", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally { MouseCursor.Restore(); }
         }
@@ -84,7 +84,7 @@ namespace Wifi_Share
             foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (item.NetworkInterfaceType == NetworkInterfaceType.Loopback) continue;
-                if (item.Speed <= 0) continue;
+                //if (item.Speed <= 0) continue;
 
                 comboBox1.Items.Add(item.Name);
                 _netGuids.Add(item.Id.ToLower());
