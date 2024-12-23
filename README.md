@@ -45,3 +45,6 @@
 ### [Wifi_Share.exe](Wifi_Share/bin/Wifi_Share.exe)
 > Wifi热点强制开启工具，无需先连接互联网。
 
+### [SSH_Exec.exe](SSH_Exec/SSH_Exec.exe)
+> 自动`SSH`登录指定服务器后读取`commands`里的命令执行后退出。
+
