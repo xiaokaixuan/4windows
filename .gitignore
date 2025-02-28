@@ -9,6 +9,8 @@
 */*.plg
 */*.obj
 
+**/obj
+**/.vs
 **/Debug
 **/Release
 

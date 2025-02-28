@@ -48,3 +48,5 @@
 ### [SSH_Exec.exe](SSH_Exec/SSH_Exec.exe)
 > 自动`SSH`登录指定服务器后读取`commands`里的命令执行后退出。
 
+### [wxPirs.exe](wxPirs/wxPirs/bin/wxPirs.exe)
+> 用于解压`XBOX360-LIVE`游戏包`XBLA`文件至原始`XEX`可执行文件。
