@@ -292,6 +292,7 @@
 			base.MainMenuStrip = this.menuStrip;
 			base.Name = "MainForm";
 			this.Text = "wxPirs";
+			this.Size = new global::System.Drawing.Size(1024, 720);
 			base.FormClosing += new global::System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			base.Load += new global::System.EventHandler(this.MainForm_Load);
 			this.menuStrip.ResumeLayout(false);
