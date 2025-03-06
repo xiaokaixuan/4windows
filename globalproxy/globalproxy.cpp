@@ -28,17 +28,17 @@ int main(int argc, TCHAR* argv[])
 	TCHAR proxy_addr[1024] = { 0 };
 	(void)lstrcpyn(proxy_addr, argv[1], _countof(proxy_addr));
 
-	if (!SetConnectionOptions(connection_name, proxy_addr))
-	{
-		std::cerr << _T("Proxy set to ") << proxy_addr << " failure." << std::endl;
-		return 1;
-	}
 	if (lstrlen(proxy_addr) <= 0) {
 		if (!DisableConnectionProxy(connection_name))
 		{
 			std::cerr << _T("Proxy disable") << " failure." << std::endl;
 			return 1;
 		}
+	}
+	else if (!SetConnectionOptions(connection_name, proxy_addr))
+	{
+		std::cerr << _T("Proxy set to ") << proxy_addr << " failure." << std::endl;
+		return 1;
 	}
 	return 0;
 }
@@ -47,7 +47,7 @@ BOOL SetConnectionOptions(LPTSTR conn_name, LPTSTR proxy_full_addr)
 {
 	//conn_name: active connection name. 
 	//proxy_full_addr : eg "210.78.22.87:8000"
-	INTERNET_PER_CONN_OPTION_LIST list;
+	INTERNET_PER_CONN_OPTION_LIST list{};
 	BOOL    bReturn;
 	DWORD   dwBufSize = sizeof(list);
 	// Fill out list struct.
@@ -94,7 +94,7 @@ BOOL SetConnectionOptions(LPTSTR conn_name, LPTSTR proxy_full_addr)
 BOOL DisableConnectionProxy(LPTSTR conn_name)
 {
 	//conn_name: active connection name. 
-	INTERNET_PER_CONN_OPTION_LIST list;
+	INTERNET_PER_CONN_OPTION_LIST list{};
 	BOOL    bReturn;
 	DWORD   dwBufSize = sizeof(list);
 	// Fill out list struct.
