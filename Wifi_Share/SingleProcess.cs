@@ -63,7 +63,7 @@ namespace Wifi_Share
             using (MemoryMappedViewStream stream = _mapFile.CreateViewStream())
             {
                 BinaryReader reader = new BinaryReader(stream);
-                IntPtr hWindow = new IntPtr(reader.ReadInt32());
+                IntPtr hWindow = new IntPtr(reader.ReadInt64());
                 if (hWindow == IntPtr.Zero) return;
                 if (Nested.IsIconic(hWindow))
                 {
@@ -78,7 +78,7 @@ namespace Wifi_Share
             using (MemoryMappedViewStream stream = _mapFile.CreateViewStream())
             {
                 BinaryWriter writer = new BinaryWriter(stream);
-                writer.Write(hWindow.ToInt32());
+                writer.Write(hWindow.ToInt64());
             }
         }
         public void RunSelfAsAdmin()
