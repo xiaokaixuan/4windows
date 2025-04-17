@@ -16,7 +16,7 @@ BOOL CMultiWechatApp::InitInstance()
 {
 	AfxEnableControlContainer();
 	
-	SetDialogBkColor(RGB(255, 255, 255));
+	//SetDialogBkColor(RGB(255, 255, 255));
 
 	CMultiWechatDlg dlg;
 	m_pMainWnd = &dlg;

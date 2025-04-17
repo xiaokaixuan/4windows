@@ -24,6 +24,7 @@ BEGIN_MESSAGE_MAP(CMultiWechatDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_BUTTON_START, OnButtonStart)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 BOOL CMultiWechatDlg::OnInitDialog()
@@ -105,7 +106,7 @@ void CMultiWechatDlg::_FindWechat()
 		else EndDialog(IDCANCEL);
 	}
 	CString strTip;
-	strTip.Format(_T("%d、微信已安装：%s\n"), m_nNumber++, m_strWechat);
+	strTip.Format(_T("%d、微信已安装：%s\r\n"), m_nNumber++, m_strWechat.GetString());
 	m_edtInfo.SetSel(m_edtInfo.GetWindowTextLength(), m_edtInfo.GetWindowTextLength());
 	m_edtInfo.ReplaceSel(strTip);
 	m_edtInfo.SetSel(m_edtInfo.GetWindowTextLength(), m_edtInfo.GetWindowTextLength());
@@ -117,16 +118,16 @@ void CMultiWechatDlg::_Process()
 	CString strTip;
 	if (0 == nReturn)
 	{
-		strTip.Format(_T("%d、已存在微信进程，正在破解进程互斥...\n"), m_nNumber++);
+		strTip.Format(_T("%d、已存在微信进程，正在破解进程互斥...\r\n"), m_nNumber++);
 		m_edtInfo.SetSel(m_edtInfo.GetWindowTextLength(), m_edtInfo.GetWindowTextLength());
 		m_edtInfo.ReplaceSel(strTip);
 	}
-	strTip.Format(_T("%d、正在启动微信(Wechat)中...\n"), m_nNumber++);
+	strTip.Format(_T("%d、正在启动微信(Wechat)中...\r\n"), m_nNumber++);
 	m_edtInfo.SetSel(m_edtInfo.GetWindowTextLength(), m_edtInfo.GetWindowTextLength());
 	m_edtInfo.ReplaceSel(strTip);
 	if ((INT)ShellExecute(GetSafeHwnd(), _T("Open"), m_strWechat, NULL, NULL, SW_SHOW) > 32)
 	{
-		strTip.Format(_T("%d、微信(Wechat)成功启动！！！\n"), m_nNumber++);
+		strTip.Format(_T("%d、微信(Wechat)成功启动！！！\r\n"), m_nNumber++);
 		m_edtInfo.SetSel(m_edtInfo.GetWindowTextLength(), m_edtInfo.GetWindowTextLength());
 		m_edtInfo.ReplaceSel(strTip);
 	}
@@ -138,3 +139,17 @@ void CMultiWechatDlg::OnButtonStart()
 	this->_Process();
 }
 
+HBRUSH CMultiWechatDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// 设置对话框的背景颜色
+	//if (nCtlColor == CTLCOLOR_DLG)
+	{
+		// 例如，设置为浅灰色
+		pDC->SetBkColor(RGB(255, 255, 255));
+		// 创建并返回一个浅灰色画刷
+		return (HBRUSH)GetStockObject(WHITE_BRUSH); // 或者 CreateSolidBrush(RGB(240, 240, 240));
+	}
+	return hbr;
+}
