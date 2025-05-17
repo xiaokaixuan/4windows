@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Wifi_Share
 {
-    public class SingleProcess
+    public class SingleProcess : TSingleton<SingleProcess>
     {
         private static readonly string _uniqueName = $"__Mutex_{nameof(Wifi_Share)}__";
         private readonly bool _createNew = false;
@@ -17,26 +17,19 @@ namespace Wifi_Share
 
         public bool IsNew => _createNew;
         public bool IsAdmin => _isAdmin;
-        /// <summary>
-        /// Lazy Singleton
-        /// </summary>
-        private static class Nested
-        {
-            static Nested() { } // Cancel BeforeFieldInit
-            public static readonly SingleProcess instance = new SingleProcess();
-            [DllImport("User32", CharSet = CharSet.Unicode, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool IsIconic(IntPtr hWnd);
 
-            [DllImport("User32", CharSet = CharSet.Unicode)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+		[DllImport("User32", CharSet = CharSet.Unicode, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool IsIconic(IntPtr hWnd);
 
-            [DllImport("User32", CharSet = CharSet.Unicode, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetForegroundWindow(IntPtr hWnd);
-        }
-        public static SingleProcess Instance => Nested.instance;
+		[DllImport("User32", CharSet = CharSet.Unicode)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+		[DllImport("User32", CharSet = CharSet.Unicode, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool SetForegroundWindow(IntPtr hWnd);
+
         private SingleProcess()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
@@ -65,11 +58,11 @@ namespace Wifi_Share
                 BinaryReader reader = new BinaryReader(stream);
                 IntPtr hWindow = new IntPtr(reader.ReadInt64());
                 if (hWindow == IntPtr.Zero) return;
-                if (Nested.IsIconic(hWindow))
+                if (IsIconic(hWindow))
                 {
-                    Nested.ShowWindow(hWindow, 9); // SW_RESTORE
+                    ShowWindow(hWindow, 9); // SW_RESTORE
                 }
-                Nested.SetForegroundWindow(hWindow);
+                SetForegroundWindow(hWindow);
             }
         }
         public void SaveMainWindow(IntPtr hWindow)
