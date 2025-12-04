@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (P.R.C.) resources
+// 中文(简体，中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
-#ifdef _WIN32
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 #pragma code_page(936)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -27,18 +25,18 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -66,42 +64,38 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Icon Extractor.ico"
+IDR_MAINFRAME           ICON                    "res\\Icon Extractor.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ICONEXTRACTOR_DIALOG DIALOGEX 0, 0, 297, 203
-STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
-    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+IDD_ICONEXTRACTOR_DIALOG DIALOGEX 0, 0, 395, 291
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "万能图标提取器2013"
-FONT 9, "宋体"
+FONT 9, "宋体", 0, 0, 0x1
 BEGIN
-    CONTROL         "List1",IDC_LIST_ICONS,"SysListView32",WS_BORDER | 
-                    WS_TABSTOP,-7,29,304,147
-    CTEXT           "图标资源文件：",IDC_STATIC_PATH,6,6,57,16,
-                    SS_CENTERIMAGE
+    CONTROL         "List1",IDC_LIST_ICONS,"SysListView32",WS_BORDER | WS_TABSTOP,-7,29,304,147
+    CTEXT           "图标资源文件：",IDC_STATIC_PATH,6,6,57,16,SS_CENTERIMAGE
     EDITTEXT        IDC_EDIT_PATH,68,7,195,14,ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "",IDC_BUTTON_BROWSE,273,7,17,14
+    PUSHBUTTON      "",IDC_BUTTON_BROWSE,371,7,17,14
 END
 
-IDD_ABOUT DIALOG DISCARDABLE  0, 0, 187, 83
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUT DIALOG 0, 0, 187, 83
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "关于 万能图标提取器2013"
 FONT 9, "宋体"
 BEGIN
     DEFPUSHBUTTON   "确定(&O)",IDOK,127,59,50,14
     ICON            IDR_MAINFRAME,IDC_STATIC,18,17,20,20
-    LTEXT           "万能图标提取器2013  1.0版\n\n\t\t——作者：凯旋",
-                    IDC_STATIC,46,17,122,25
+    LTEXT           "万能图标提取器2013  1.0版\n\n\t\t——作者：凯旋",IDC_STATIC,46,17,122,25
     LTEXT           "联系作者",IDC_STATIC_LINK,28,52,33,8
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -124,18 +118,15 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "Comments", "万能图标提取器2013\0"
-            VALUE "CompanyName", "By： 凯旋\0"
-            VALUE "FileDescription", "万能图标提取器2013\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "Icon Extractor\0"
-            VALUE "LegalCopyright", "版权所有 (C) 2013\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Icon Extractor.exe\0"
-            VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "万能图标提取器2013\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
-            VALUE "SpecialBuild", "\0"
+            VALUE "Comments", "万能图标提取器2013"
+            VALUE "CompanyName", "By： 凯旋"
+            VALUE "FileDescription", "万能图标提取器2013"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Icon Extractor"
+            VALUE "LegalCopyright", "版权所有 (C) 2013"
+            VALUE "OriginalFilename", "Icon Extractor.exe"
+            VALUE "ProductName", "万能图标提取器2013"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -144,8 +135,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -153,14 +142,14 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ICONEXTRACTOR_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 290
+        RIGHTMARGIN, 388
         TOPMARGIN, 7
-        BOTTOMMARGIN, 196
+        BOTTOMMARGIN, 284
     END
 
     IDD_ABOUT, DIALOG
@@ -179,32 +168,36 @@ END
 // Bitmap
 //
 
-IDB_BITMAP_UP           BITMAP  DISCARDABLE     "res\\up.bmp"
-IDB_BITMAP_DOWN         BITMAP  DISCARDABLE     "res\\down.bmp"
-IDB_BITMAP_OVER         BITMAP  DISCARDABLE     "res\\over.bmp"
+IDB_BITMAP_UP           BITMAP                  "res\\up.bmp"
+
+IDB_BITMAP_DOWN         BITMAP                  "res\\down.bmp"
+
+IDB_BITMAP_OVER         BITMAP                  "res\\over.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// she
+// SHE
 //
 
-darkroyale              she     DISCARDABLE     "res\\darkroyale.she"
+DARKROYALE              SHE                     "res\\darkroyale.she"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDR_POPMENU MENU DISCARDABLE 
+IDR_POPMENU MENU
 BEGIN
     POPUP "pop"
     BEGIN
-        MENUITEM "[刷新当前图标](&W)",          ID_MENUITEM_REFRESH
-        MENUITEM "[提取选中图标](&X)",          ID_MENUITEM_EXTRACT
+        MENUITEM "[刷新当前图标](&W)",                ID_MENUITEM_REFRESH
+        MENUITEM "[提取选中图标](&X)",                ID_MENUITEM_EXTRACT
         MENUITEM SEPARATOR
-        MENUITEM "[全选所有图标](&Y)",          ID_MENUITEM_SELECTALL
+        MENUITEM "[全选所有图标](&Y)",                ID_MENUITEM_SELECTALL
         MENUITEM SEPARATOR
-        MENUITEM "<<关于帮助>>(&Z)",            ID_MENUITEM_ABOUT
+        MENUITEM "<<关于帮助>>(&Z)",                ID_MENUITEM_ABOUT
         MENUITEM SEPARATOR
     END
 END
@@ -212,23 +205,35 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// 24
+// RT_MANIFEST
 //
 
-1                       24      DISCARDABLE     "res\\UIStyle.manifest"
+1                       RT_MANIFEST             "res\\UIStyle.manifest"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ICONEXTRACTOR_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_AUTHOR              "版权所有 (c) 2013 凯旋"
     IDS_ICONUM              "当前发现图标数："
 END
 
-#endif    // Chinese (P.R.C.) resources
+#endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

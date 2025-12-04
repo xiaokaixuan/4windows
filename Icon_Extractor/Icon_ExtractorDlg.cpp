@@ -1,13 +1,13 @@
-// Icon ExtractorDlg.cpp : implementation file
+// Icon_ExtractorDlg.cpp : implementation file
 //
 
 #include "stdafx.h"
-#include "Icon Extractor.h"
+#include "Icon_Extractor.h"
 #include "AutoFont.h"
 #include <shlwapi.h>
 #include "AboutDlg.h"
 #include "ExAPI.h"
-#include "Icon ExtractorDlg.h"
+#include "Icon_ExtractorDlg.h"
 
 #pragma comment(lib, "shlwapi.lib")
 
@@ -239,6 +239,7 @@ void CIconExtractorDlg::_ParseFile()
 
 void CIconExtractorDlg::_UpdateList()
 {
+	m_lscIcons.SetRedraw(FALSE);
 	m_lscIcons.DeleteAllItems();
 	int nCnt = m_pImgList->GetImageCount();
 	CString strText, strStatus;
@@ -253,7 +254,7 @@ void CIconExtractorDlg::_UpdateList()
 		m_lscIcons.InsertItem(i, str, i);
 		m_lscIcons.SetItemData(i, (DWORD)m_vIcoRes[i]);
 	}
-
+	m_lscIcons.SetRedraw(TRUE);
 }
 
 HBRUSH CIconExtractorDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)

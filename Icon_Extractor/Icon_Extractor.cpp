@@ -1,9 +1,9 @@
-// Icon Extractor.cpp : Defines the class behaviors for the application.
+// Icon_Extractor.cpp : Defines the class behaviors for the application.
 //
 
 #include "stdafx.h"
-#include "Icon Extractor.h"
-#include "Icon ExtractorDlg.h"
+#include "Icon_Extractor.h"
+#include "Icon_ExtractorDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

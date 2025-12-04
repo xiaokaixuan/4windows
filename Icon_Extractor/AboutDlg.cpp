@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "Icon Extractor.h"
+#include "Icon_Extractor.h"
 #include "AboutDlg.h"
 
 #ifdef _DEBUG
