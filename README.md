@@ -33,7 +33,7 @@
 ### [图标库制作器2013.exe](IclGenerate/Bin/IclGenerate2013.exe)
 > 顾名思义，可将大量ICO图标文件打包制作成单个DLL或ICL文件，便于存储和使用。
 
-### [万能图标提取器2013.exe](Icon%20Extractor/Bin/万能图标提取器2013.exe)
+### [万能图标提取器2013.exe](Icon_Extractor/Bin/Icon_Extractor.exe)
 > 顾名思义，可从DLL或EXE文件中提取ICO图标文件，支持单个和批量导出。
 
 ### [万能图标转换器2013.exe](Image2Icon/Bin/万能图标转换器2013.exe)
