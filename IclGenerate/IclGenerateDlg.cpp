@@ -328,6 +328,7 @@ void CIclGenerateDlg::StartFind()
 
 void CIclGenerateDlg::UpdateList()
 {
+	m_lscIcon.SetRedraw(FALSE);
 	m_lscIcon.DeleteAllItems();
 
 	int nCnt = m_pImgList->GetImageCount();
@@ -344,6 +345,8 @@ void CIclGenerateDlg::UpdateList()
 		m_lscIcon.InsertItem(i, str, i);
 		m_lscIcon.SetItemData(i, (DWORD)m_vpStrs[i]);
 	}
+	m_lscIcon.SetRedraw(TRUE);
+	Invalidate();
 }
 
 void CIclGenerateDlg::OnButtonBrowse() 

@@ -30,7 +30,7 @@
 ### [ToolBarPainter.exe](ToolBarPainter/ToolBarPainter/Bin/ToolBarPainter.exe)
 > 工具条图片制作器，可将ICO图标制作成彩色和灰度的工具栏长条图片，便于软件工具栏开发。
 
-### [图标库制作器2013.exe](IclGenerate/Bin/图标库制作器2013.exe)
+### [图标库制作器2013.exe](IclGenerate/Bin/IclGenerate2013.exe)
 > 顾名思义，可将大量ICO图标文件打包制作成单个DLL或ICL文件，便于存储和使用。
 
 ### [万能图标提取器2013.exe](Icon%20Extractor/Bin/万能图标提取器2013.exe)

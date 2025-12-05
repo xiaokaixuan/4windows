@@ -255,6 +255,7 @@ void CIconExtractorDlg::_UpdateList()
 		m_lscIcons.SetItemData(i, (DWORD)m_vIcoRes[i]);
 	}
 	m_lscIcons.SetRedraw(TRUE);
+	Invalidate();
 }
 
 HBRUSH CIconExtractorDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
