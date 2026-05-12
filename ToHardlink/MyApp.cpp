@@ -31,20 +31,23 @@ VOID CMyApp::SetVerbose(BOOL bVerbose/* = TRUE*/)
 	m_bVerbose = bVerbose;
 }
 
-VOID CMyApp::FindFiles(LPCTSTR pszDirName)
+VOID CMyApp::FindFiles(LPCTSTR pszDirName, LPCTSTR pszFilter)
 {
 	TCHAR szDirName[4096] = { 0 };
-	lstrcpyn(szDirName, pszDirName, 4096);
+	(void)lstrcpyn(szDirName, pszDirName, 4096);
 	PathAppend(szDirName, _T("*.*"));
 	CFileFind finder;
 	for (BOOL bResult = finder.FindFile(szDirName); bResult;)
 	{
 		bResult = finder.FindNextFile();
 		CString strPath = finder.GetFilePath();
-		if (m_bVerbose) _ftprintf(stdout, _T("%s\n"), strPath);
+		if (m_bVerbose) _ftprintf(stdout, _T("%s\n"), (LPCTSTR)strPath);
 		if (finder.IsDots()) continue;
-		else if (finder.IsDirectory()) FindFiles(strPath);
-		else m_arrFileNames.Add(strPath);
+		else if (finder.IsDirectory()) FindFiles(strPath, pszFilter);
+		else if (PathMatchSpec(strPath, pszFilter))
+		{
+			m_arrFileNames.Add(strPath);
+		}
 	}
 	finder.Close();
 }
@@ -71,7 +74,7 @@ VOID CMyApp::CreateLink(LPCTSTR pszLink, LPCTSTR pszTarget) const
 {
 	do {
 		TCHAR szLinkPath[4096] = { 0 };
-		lstrcpyn(szLinkPath, pszLink, 4096);
+		(void)lstrcpyn(szLinkPath, pszLink, 4096);
 		lstrcat(szLinkPath, _T(".hardlink_swap"));
 		if (!MoveFile(pszLink, szLinkPath))
 		{
@@ -119,7 +122,7 @@ DWORD WINAPI CMyApp::_SumMD5AndProccess(LPVOID lpParameter)
 #else
 				lstrcpyn(szMD5, md5.toString().c_str(), 33);
 #endif // defined(_UNICODE) || defined(UNICODE)
-				UnmapViewOfFile(lpBuff);
+				if (lpBuff) UnmapViewOfFile(lpBuff);
 				CloseHandle(hMap);
 			}
 			CloseHandle(hFile);

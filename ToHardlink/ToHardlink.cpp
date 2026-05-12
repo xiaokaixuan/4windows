@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MyApp.h"
 #include <locale.h>
+#include <vector>
 #include "ToHardlink.h"
 
 #ifdef _DEBUG
@@ -27,12 +28,26 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 		else
 		{
 			_tsetlocale(LC_ALL, _T("chs"));
-			if (argc > 1 && !lstrcmpi(argv[1], _T("-v")))
+			std::vector<CString> strVec;
+			for (int i(1); i < argc; ++i) strVec.emplace_back(argv[i]);
+			auto iter = std::find_if(strVec.begin(), strVec.end(), [](const CString& str)
+				{
+					return str.CompareNoCase(_T("--verbose")) == 0;
+				});
+			if (iter != strVec.end())
 			{
+				strVec.erase(iter);
 				theApp.SetVerbose(TRUE);
 			}
-			_ftprintf(stdout, _T("[INFO]Finding files...\n"));
-			theApp.FindFiles(_T("."));
+			if (strVec.empty())
+			{
+				_ftprintf(stdout, _T("\nExample: ToHardLink.exe *.mp4;*.mkv --verbose\n"));
+				return nRetCode = 1;
+			}
+			CString strFilter(strVec.front());
+			_ftprintf(stdout, _T("[INFO]Finding files %s ...\n"), (LPCTSTR)strFilter);
+			theApp.FindFiles(_T("."), strFilter);
+			_ftprintf(stdout, _T("[INFO]Found files %d...\n"), theApp.GetFileCount());
 			_ftprintf(stdout, _T("[INFO]Processing files...\n"));
 			theApp.ProcessFiles();
 			_ftprintf(stdout, _T("[INFO]Process finish.\n"));

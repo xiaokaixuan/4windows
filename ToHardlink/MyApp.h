@@ -17,9 +17,10 @@ public:
 	virtual ~CMyApp();
 public:
 	VOID SetVerbose(BOOL bVerbose = TRUE);
+	inline int GetFileCount() const { return (int)m_arrFileNames.GetCount(); }
 
 public:
-	VOID FindFiles(LPCTSTR pszDirName);
+	VOID FindFiles(LPCTSTR pszDirName, LPCTSTR pszFilter);
 	VOID CreateLink(LPCTSTR pszTarget, LPCTSTR pszLink) const;
 	VOID CheckMd5Mklink(LPCTSTR pszMD5, LPCTSTR pszPath);
 
