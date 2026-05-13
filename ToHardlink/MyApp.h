@@ -25,6 +25,7 @@ public:
 	VOID CheckMd5Mklink(LPCTSTR pszMD5, LPCTSTR pszPath);
 
 	VOID ProcessFiles();
+	BOOL IsSameFileLink(LPCTSTR pszPath1, LPCTSTR pszPath2) const;
 
 public:
 	static DWORD WINAPI _SumMD5AndProccess(LPVOID lpParameter);

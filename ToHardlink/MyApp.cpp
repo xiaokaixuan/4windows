@@ -73,6 +73,11 @@ VOID CMyApp::CheckMd5Mklink(LPCTSTR pszMD5, LPCTSTR pszPath)
 VOID CMyApp::CreateLink(LPCTSTR pszLink, LPCTSTR pszTarget) const
 {
 	do {
+		if (IsSameFileLink(pszLink, pszTarget))
+		{
+			_ftprintf(stdout, _T("[INFO]IsSameLink OK:\n  %s\n  <<===>> %s\n"), pszLink, pszTarget);
+			break;
+		}
 		TCHAR szLinkPath[4096] = { 0 };
 		(void)lstrcpyn(szLinkPath, pszLink, 4096);
 		lstrcat(szLinkPath, _T(".hardlink_swap"));
@@ -156,5 +161,34 @@ VOID CMyApp::ProcessFiles()
 	}
 	pThreadPool->Wait(INFINITE);
 	delete pThreadPool;
+}
+
+BOOL CMyApp::IsSameFileLink(LPCTSTR pszPath1, LPCTSTR pszPath2) const
+{
+	const DWORD access = 0;
+	const DWORD share = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
+	const DWORD flags = FILE_ATTRIBUTE_NORMAL | FILE_FLAG_BACKUP_SEMANTICS;
+
+	HANDLE h1 = CreateFile(pszPath1, access, share, NULL, OPEN_EXISTING, flags, NULL);
+	if (h1 == INVALID_HANDLE_VALUE) return FALSE;
+
+	HANDLE h2 = CreateFile(pszPath2, access, share, NULL, OPEN_EXISTING, flags, NULL);
+	if (h2 == INVALID_HANDLE_VALUE)
+	{
+		CloseHandle(h1);
+		return FALSE;
+	}
+	BY_HANDLE_FILE_INFORMATION info1{}, info2{};
+	BOOL is_same = FALSE;
+
+	// 直接在内核层面比对文件索引
+	if (GetFileInformationByHandle(h1, &info1) && GetFileInformationByHandle(h2, &info2)) {
+		is_same = (info1.nFileIndexLow == info2.nFileIndexLow &&
+			info1.nFileIndexHigh == info2.nFileIndexHigh &&
+			info1.dwVolumeSerialNumber == info2.dwVolumeSerialNumber);
+	}
+	CloseHandle(h1);
+	CloseHandle(h2);
+	return is_same;
 }
 
