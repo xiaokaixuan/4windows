@@ -36,19 +36,19 @@ char PortsUsed[256];
 typedef struct {
     struct sockaddr_in xfer_addr;
     BOOL PassiveMode;
-    int PassiveSocket;
+    SOCKET PassiveSocket;
     char XferBuffer[262114];
-    int CommandSocket;
+    SOCKET CommandSocket;
     int XferPort;
 }Inst_t;
 
 //------------------------------------------------------------------------------------
 // Create a TCP/IP port, return the socket for the connection
 //------------------------------------------------------------------------------------
-static int CreateTcpipSocket(int * Port)
+static SOCKET CreateTcpipSocket(int * Port)
 {
     struct sockaddr_in socket_addr;
-    int sock;
+    SOCKET sock;
     int socket_addr_size = sizeof(socket_addr);
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -86,9 +86,9 @@ static int CreateTcpipSocket(int * Port)
 // Return a socket to the connected port.
 // Return -1 if an error occurs
 //------------------------------------------------------------------------------------
-static int ConnectTcpip(struct sockaddr_in *addr, int addrlen) 
+static SOCKET ConnectTcpip(struct sockaddr_in *addr, int addrlen) 
 {
-    int sock;
+    SOCKET sock;
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if(sock<0){
         perror("socket() failed");
@@ -113,7 +113,7 @@ typedef enum {
     UNKNOWN_COMMAND
 }CmdTypes;
 
-static struct command_list {
+struct command_list {
     char *command;
     CmdTypes CmdNum;
 };
@@ -192,7 +192,7 @@ static void SendReply(Inst_t * Conn, char *Reply)
     char ReplyStr[MAX_PATH+20];
     printf("    %s\n",Reply);
     sprintf(ReplyStr, "%s\r\n", Reply);
-    send(Conn->CommandSocket, ReplyStr, strlen(ReplyStr),0);
+    send(Conn->CommandSocket, ReplyStr, (int)strlen(ReplyStr),0);
 }
 
 //------------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ static void Send550Error(Inst_t * Conn)
 //------------------------------------------------------------------------------------
 static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
 {
-    int xfer_sock;
+    SOCKET xfer_sock;
     char repbuf[500];
     int a;
     BOOL ListAll = FALSE;
@@ -235,7 +235,7 @@ static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
 
     {
         struct __finddata64_t finddata;
-        long find_handle;
+        intptr_t find_handle;
 
         if (*filename == 0) filename = "*";
         if (*filename == '-'){ 
@@ -279,7 +279,7 @@ static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
             }else{
                 sprintf(repbuf, "%s\r\n",finddata.name);
             }
-            send(xfer_sock, repbuf, strlen(repbuf),0);
+            send(xfer_sock, repbuf, (int)strlen(repbuf),0);
 
             next_file:
             if (_findnext64(find_handle, &finddata) != 0) break;
@@ -299,7 +299,7 @@ static void Cmd_NLST(Inst_t * Conn, char *filename, BOOL Long, BOOL UseCtrlConn)
 static void Cmd_RETR(Inst_t * Conn, char *filename) 
 {
     int file;
-    int xfer_sock;
+    SOCKET xfer_sock;
     int size;
 
     // Check to see if the file can be opened for reading
@@ -356,7 +356,7 @@ static void Cmd_RETR(Inst_t * Conn, char *filename)
 static void Cmd_STOR(Inst_t * Conn, char *filename) 
 {
     FILE * file;
-    int xfer_sock;
+    SOCKET xfer_sock;
     int size;
 
     // Check to see if the file can be opened for reading
@@ -734,7 +734,8 @@ static void Usage (void)
 //------------------------------------------------------------------------------------
 int main (int argc, char **argv)
 {
-    int socket, ControlPort;
+    SOCKET socket;
+    int ControlPort;
     char hostname[256];
     struct hostent * hostinfo;
     WSADATA wsaData;
@@ -840,7 +841,7 @@ int main (int argc, char **argv)
     printf("\n");
 
     for(;;){
-        int CommandSocket;
+        SOCKET CommandSocket;
         Inst_t * Conn;
 
         // Accept connections on socket

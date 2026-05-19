@@ -72,7 +72,7 @@ char * MyGetDir(void)
     int RootLen;
     static char DirNow[MAX_PATH];
 
-    RootLen = strlen(RootDir);
+    RootLen = (int)strlen(RootDir);
     if (RootLen ==3) RootLen = 2;
 
     getcwd(DirNow, sizeof(DirNow));
@@ -104,7 +104,7 @@ char * TranslatePath(const char * FilePath)
     if (FilePath[0] == '\\' || FilePath[0] == '/'){
         // Absolute file path.  Concatenate path with our notion of root
         strcpy(NewPath, RootDir);
-        b = strlen(RootDir);
+        b = (int)strlen(RootDir);
         if (b == 3) b = 2; // Root dir is something like 'c:\' - so it ends with '\'.  
     }else{
         // Relative path. 
