@@ -13,7 +13,7 @@ $(OBJS): $(@B).c paths.h
     $(CC) $(CFLAGS) $(@B).c
 
 $(TARGET): $(OBJS)
-    $(LINKER) $(LINKCON) -OUT:Bin/ftpdmin.exe $(OBJS) ws2_32.lib 
+    $(LINKER) $(LINKCON) -OUT:$(TARGET) $(OBJS) ws2_32.lib 
     
 clean:
     del /a /q $(TARGET) $(OBJS) 2>nul
