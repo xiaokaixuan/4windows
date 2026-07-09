@@ -76,11 +76,18 @@ namespace Wifi_Share
         }
         public void RunSelfAsAdmin()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = Application.ExecutablePath;
-            startInfo.UseShellExecute = true;
-            startInfo.Verb = "runas";
-            Process.Start(startInfo);
+            try
+			{
+				ProcessStartInfo startInfo = new ProcessStartInfo();
+            	startInfo.FileName = Application.ExecutablePath;
+            	startInfo.UseShellExecute = true;
+            	startInfo.Verb = "runas";
+            	Process.Start(startInfo);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Process runas admin failure: {ex}");
+			}
         }
     }
 }
